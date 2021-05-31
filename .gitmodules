@@ -1,0 +1,7 @@
+[submodule "3rdparty/bgfx-cmake"]
+	path = 3rdparty/bgfx-cmake
+	url = https://github.com/bkaradzic/bgfx.cmake
+[submodule "3rdparty/bgfx-imgui/3rdparty/dear-imgui"]
+	path = 3rdparty/bgfx-imgui/3rdparty/dear-imgui
+	url = https://github.com/ocornut/imgui
+	branch = docking
