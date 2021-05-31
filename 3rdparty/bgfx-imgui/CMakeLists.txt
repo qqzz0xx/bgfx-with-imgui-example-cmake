@@ -1,7 +1,7 @@
 cmake_minimum_required(VERSION 3.19)
 
 # --------------------------------------
-# Project
+# Project bgfx+imgui
 # --------------------------------------
 project(bgfx-imgui)
 
@@ -23,7 +23,6 @@ set(BGFX_IMGUI_PATCH
 )
 
 set(IMGUI_GENERATED_DIR ${CMAKE_CURRENT_BINARY_DIR}/generated/dear-imgui)
-file(MAKE_DIRECTORY IMGUI_GENERATED_DIR)
 file(
     COPY 
         ${VANILLA_IMGUI_SOURCES} 
@@ -33,20 +32,36 @@ file(
         ${IMGUI_GENERATED_DIR}
 )
 
+file(GLOB_RECURSE IMGUI_GENERATED_SOURCES
+    ${IMGUI_GENERATED_DIR}/*
+)
+
+# --------------------------------------
+# Add bgfx examples/common copy because
+# these files are required. It is better
+# to maintain a local copy here because
+# there is no guarantee that anything in
+# examples actually work so this files
+# may require modifications for your own
+# environment.
+# --------------------------------------
 
 file(GLOB_RECURSE INTEGRATION_SOURCES
     ${CMAKE_CURRENT_LIST_DIR}/src/bgfx/*
 )
 
-file(GLOB_RECURSE IMGUI_GENERATED_SOURCES
-    ${IMGUI_GENERATED_DIR}/*
-)
+# --------------------------------------
+# Combine patched imgui with commons
+# --------------------------------------
 
 set(SOURCES
     ${IMGUI_GENERATED_SOURCES}
     ${INTEGRATION_SOURCES}
 )
 
+# --------------------------------------
+# Define the library
+# --------------------------------------
 add_library(${PROJECT_NAME} STATIC ${SOURCES})
 
 # --------------------------------------
@@ -62,7 +77,7 @@ target_include_directories(${PROJECT_NAME}
 # Link libraries
 # --------------------------------------
 target_link_libraries(${PROJECT_NAME} 
-    PRIVATE
+    PUBLIC
         bgfx
         bx
         bimg
