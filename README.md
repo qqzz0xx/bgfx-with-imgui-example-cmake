@@ -2,6 +2,13 @@
 
 This is a boilerplate for starting a project with [bgfx](https://github.com/bkaradzic/bgfx) and [dear-imgui](https://github.com/ocornut/imgui) using [cmake](https://cmake.org/) build system generator.
 
+
+# IMPORTANT
+
+* This repo is just an example of how I use bgfx with a dear-imgui version different from the one included in bgfx.
+* I have only tested it in my environment: Linux Mint 19.3 and clang 11.0.1
+* I do not offer any support, if you find problems I will be happy to accept your solution as a pull request.
+
 ## Features
 
 * Vanilla bgfx (via [bgfx.cmake](https://github.com/bkaradzic/bgfx.cmake))
