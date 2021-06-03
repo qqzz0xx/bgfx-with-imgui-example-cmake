@@ -3,6 +3,19 @@
 This is a boilerplate for starting a project with [bgfx](https://github.com/bkaradzic/bgfx) and [dear-imgui](https://github.com/ocornut/imgui) using [cmake](https://cmake.org/) build system generator.
 
 
+## Usage
+
+```
+> git clone https://github.com/mnesarco/bgfx-with-imgui-example-cmake
+> cd bgfx-with-imgui-example-cmake
+> git submodule update --init --recursive
+>
+> mkdir build
+> cd build
+> cmake ..
+> cmake --build .
+```
+
 # IMPORTANT
 
 * This repo is just an example of how I use bgfx with a dear-imgui version different from the one included in bgfx.
