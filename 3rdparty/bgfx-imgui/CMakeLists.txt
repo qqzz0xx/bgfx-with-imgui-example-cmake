@@ -10,9 +10,17 @@ project(bgfx-imgui)
 # Patch Vanilla imgui with bgfx changes
 # --------------------------------------
 
-file(GLOB VANILLA_IMGUI_SOURCES
-    ${CMAKE_CURRENT_LIST_DIR}/3rdparty/dear-imgui/im*.h
-    ${CMAKE_CURRENT_LIST_DIR}/3rdparty/dear-imgui/im*.cpp
+set(VANILLA_IMGUI_SOURCES
+    ${CMAKE_CURRENT_LIST_DIR}/3rdparty/dear-imgui/imgui.h
+    ${CMAKE_CURRENT_LIST_DIR}/3rdparty/dear-imgui/imgui.cpp
+    ${CMAKE_CURRENT_LIST_DIR}/3rdparty/dear-imgui/imgui_demo.cpp
+    ${CMAKE_CURRENT_LIST_DIR}/3rdparty/dear-imgui/imgui_draw.cpp
+    ${CMAKE_CURRENT_LIST_DIR}/3rdparty/dear-imgui/imgui_internal.h
+    ${CMAKE_CURRENT_LIST_DIR}/3rdparty/dear-imgui/imgui_tables.cpp
+    ${CMAKE_CURRENT_LIST_DIR}/3rdparty/dear-imgui/imgui_widgets.cpp
+    ${CMAKE_CURRENT_LIST_DIR}/3rdparty/dear-imgui/imstb_rectpack.h
+    ${CMAKE_CURRENT_LIST_DIR}/3rdparty/dear-imgui/imstb_textedit.h
+    ${CMAKE_CURRENT_LIST_DIR}/3rdparty/dear-imgui/imstb_truetype.h
 )
 
 set(BGFX_IMGUI_PATCH
@@ -22,18 +30,18 @@ set(BGFX_IMGUI_PATCH
     ${CMAKE_CURRENT_LIST_DIR}/../bgfx-cmake/bgfx/3rdparty/dear-imgui/widgets
 )
 
-set(IMGUI_GENERATED_DIR ${CMAKE_CURRENT_BINARY_DIR}/generated/dear-imgui)
+set(IMGUI_GENERATED_DIR ${CMAKE_CURRENT_BINARY_DIR}/generated)
 file(
     COPY 
         ${VANILLA_IMGUI_SOURCES} 
         ${BGFX_IMGUI_PATCH}
         ${CMAKE_CURRENT_LIST_DIR}/src/imgui_bgfx_extra.cpp
     DESTINATION 
-        ${IMGUI_GENERATED_DIR}
+        ${IMGUI_GENERATED_DIR}/dear-imgui
 )
 
 file(GLOB_RECURSE IMGUI_GENERATED_SOURCES
-    ${IMGUI_GENERATED_DIR}/*
+    ${IMGUI_GENERATED_DIR}/dear-imgui/*
 )
 
 # --------------------------------------
@@ -69,7 +77,7 @@ add_library(${PROJECT_NAME} STATIC ${SOURCES})
 # --------------------------------------
 target_include_directories(${PROJECT_NAME} 
     PUBLIC
-        ${CMAKE_CURRENT_BINARY_DIR}/generated
+        ${IMGUI_GENERATED_DIR}
         ${CMAKE_CURRENT_LIST_DIR}/src
 )
 
