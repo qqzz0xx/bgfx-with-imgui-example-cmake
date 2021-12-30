@@ -21,6 +21,8 @@ set(BGFX_CONFIG_RENDERER_WEBGPU OFF CACHE BOOL "Enables the webgpu renderer")
 
 add_definitions(-DUNICODE -D_UNICODE)
 
+include_directories(3rdparty)
+
 include(cmake/libdshowcapture.cmake)
 Add_DshowLib(${CMAKE_CURRENT_LIST_DIR}/3rdparty/libdshowcapture)
 
