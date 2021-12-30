@@ -5,3 +5,9 @@
 	path = 3rdparty/bgfx-imgui/3rdparty/dear-imgui
 	url = https://github.com/ocornut/imgui
 	branch = docking
+[submodule "3rdparty/libdshowcapture"]
+	path = 3rdparty/libdshowcapture
+	url = https://github.com/obsproject/libdshowcapture.git
+[submodule "3rdparty/entt"]
+	path = 3rdparty/entt
+	url = https://github.com/skypjack/entt.git

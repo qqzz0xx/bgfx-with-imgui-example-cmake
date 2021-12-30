@@ -19,20 +19,36 @@ set(BX_AMALGAMATED              OFF CACHE BOOL "Amalgamated bx build for faster 
 set(BGFX_CONFIG_DEBUG           OFF CACHE BOOL "Enables debug configuration on all builds")
 set(BGFX_CONFIG_RENDERER_WEBGPU OFF CACHE BOOL "Enables the webgpu renderer")
 
+add_definitions(-DUNICODE -D_UNICODE)
+
+include(cmake/libdshowcapture.cmake)
+Add_DshowLib(${CMAKE_CURRENT_LIST_DIR}/3rdparty/libdshowcapture)
+
 add_subdirectory(3rdparty/bgfx-cmake)
 add_subdirectory(3rdparty/bgfx-imgui)
+add_subdirectory(3rdparty/entt)
+
+add_subdirectory(rhi)
+add_subdirectory(engine)
 
 # --------------------------------------
 # Sources
 # --------------------------------------
 set(SOURCES
     ${CMAKE_CURRENT_LIST_DIR}/src/main.cpp 
+    ${CMAKE_CURRENT_LIST_DIR}/src/DShowCore.h 
+    ${CMAKE_CURRENT_LIST_DIR}/src/DShowCore.cpp 
+    ${CMAKE_CURRENT_LIST_DIR}/src/HRI.h
+    ${CMAKE_CURRENT_LIST_DIR}/src/HRI.cpp 
 )
+
+
+file(GLOB SHADERS "${CMAKE_CURRENT_LIST_DIR}/src/*.sc")
 
 # --------------------------------------
 # Products
 # --------------------------------------
-add_executable(${PROJECT_NAME} ${SOURCES})
+add_executable(${PROJECT_NAME} ${SHADERS} ${SOURCES})
 
 # --------------------------------------
 # Includes
@@ -48,4 +64,16 @@ target_include_directories(${PROJECT_NAME}
 target_link_libraries(${PROJECT_NAME} 
   PRIVATE
     bgfx-imgui
+    libdshowcapture
+    EnTT
 )
+
+
+foreach( SHADER ${SHADERS} )
+add_bgfx_shader( ${SHADER} ${PROJECT_NAME} )
+endforeach()
+source_group( "Shader Files" FILES ${SHADERS})
+
+configure_debugging(${PROJECT_NAME} WORKING_DIR ${BGFX_DIR}/examples/runtime )
+
+add_custom_command( TARGET ${PROJECT_NAME} COMMAND ${CMAKE_COMMAND} -E copy_directory ${BGFX_DIR}/examples/runtime/ $<TARGET_FILE_DIR:${PROJECT_NAME}>)
